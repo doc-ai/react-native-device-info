@@ -13,6 +13,7 @@
 #import <React/RCTUtils.h>
 #import "RNDeviceInfo.h"
 #import "DeviceUID.h"
+//#import <WebKit/WebKit.h>
 
 #if !(TARGET_OS_TV)
 #import <LocalAuthentication/LocalAuthentication.h>
@@ -115,8 +116,21 @@ RCT_EXPORT_MODULE();
 #if TARGET_OS_TV
     return @"not available";
 #else
-    UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-    return [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    // UIWebView is deprecated
+    // WKWebView returns results asynchronously, which breaks this method
+    // Not using this, so let it stand as not available
+    return @"not available";
+    
+//    UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+//    return [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+
+//    WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+//    [webView loadHTMLString:@"<html></html>" baseURL:nil];
+//    [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
+//        // this handler runs on main thread
+//        NSLog(@"%@", userAgent);
+//    }];
+
 #endif
 }
 
